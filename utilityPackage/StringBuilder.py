@@ -3,6 +3,7 @@ Created on Feb 15, 2019
 
 @author: code
 '''
+from setuptools.unicode_utils import try_encode
 class AppendString(object):
     '''
     classdocs
@@ -36,7 +37,7 @@ class AppendString(object):
     
     def length(self):
         return self.returnString.__len__()
-
+    
     def __init__(self, initialString=None):
         '''
         Constructor
