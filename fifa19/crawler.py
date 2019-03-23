@@ -2,11 +2,17 @@ import pandas as pd
 import re
 import requests
 from bs4 import BeautifulSoup
-from fifa19 import StringBuilder
-from fifa19 import IntegerUtility
+from utilityPackage import IntegerUtility, StringBuilder
 from fifa19 import DBConnection
 import sys
-iu = IntegerUtility.MyClass();
+
+iu = IntegerUtility.IntUtility()
+
+print(iu.isInt("1A"))
+print(iu.isFloat("1A"))
+print(iu.isIntOrFloat("1A"))
+sys.exit(0)
+
 
 def insert(detailed_columns, detailed_data):
     connect = DBConnection.dbConnect();
@@ -16,7 +22,7 @@ def insert(detailed_columns, detailed_data):
         insertData(connect, detailed_columns, detailed_data.iloc[index], "football_player_details")
     connect.dbDisconnect();
 
-    
+
 def safe_str(obj):
     try:
         val = str(obj)
@@ -48,7 +54,7 @@ def insertData(connect, columnNames, dataToInsert, tableName):
 
     # insertSql = "insert into DATA_SCIENCE.football_player_data values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     insertVal = StringBuilder.AppendString("insert into DATA_SCIENCE." + tableName + " values (")
-    
+
     for cols in columnNames:
 #         val = dataToInsert.get(cols).values[0]
 
@@ -66,10 +72,10 @@ def insertData(connect, columnNames, dataToInsert, tableName):
 
 def playerData(insertFlag, createFlag):
     # Get basic players informaticon for all players
-    if insertFlag or createFlag : 
+    if insertFlag or createFlag :
             connect = DBConnection.dbConnect();
             mycursor = connect.dbCusror()
-        
+
     base_url = "https://sofifa.com/players?offset="
     columns = ['ID', 'Name', 'Age', 'Photo', 'Nationality', 'Flag', 'Overall', 'Potential', 'Club', 'Club Logo', 'Value', 'Wage', 'Special']
     data = pd.DataFrame(columns=columns)
@@ -105,7 +111,7 @@ def playerData(insertFlag, createFlag):
                 insertData(connect, columns, player_data, "football_player_data")
         print("Adding data for Page: " + str(offset))
     data = data.drop_duplicates()
-    
+
     if connect.isOpen():
         connect().dbDisconnect()
     print(data)
@@ -118,7 +124,7 @@ def playerDetails(insertFlag, createFlag):
     mycursor.execute("SELECT D.* FROM DATA_SCIENCE.football_player_data D WHERE D.PID NOT IN ( SELECT PID FROM DATA_SCIENCE.football_player_details) LIMIT 250")
     data = mycursor.fetchall()
     connect.dbDisconnect;
-    
+
     detailed_columns = ['Preferred Foot', 'International Reputation', 'Weak Foot', 'Skill Moves', 'Work Rate', 'Body Type', 'Real Face', 'Position', 'Jersey Number', 'Joined', 'Loaned From', 'Contract Valid Until', 'Height', 'Weight', 'LS', 'ST', 'RS', 'LW', 'LF', 'CF', 'RF', 'RW', 'LAM', 'CAM', 'RAM', 'LM', 'LCM', 'CM', 'RCM', 'RM', 'LWB', 'LDM', 'CDM', 'RDM', 'RWB', 'LB', 'LCB', 'CB', 'RCB', 'RB', 'Crossing', 'Finishing', 'HeadingAccuracy', 'ShortPassing', 'Volleys', 'Dribbling', 'Curve', 'FKAccuracy', 'LongPassing', 'BallControl', 'Acceleration', 'SprintSpeed', 'Agility', 'Reactions', 'Balance', 'ShotPower', 'Jumping', 'Stamina', 'Strength', 'LongShots', 'Aggression', 'Interceptions', 'Positioning', 'Vision', 'Penalties', 'Composure', 'Marking', 'StandingTackle', 'SlidingTackle', 'GKDiving', 'GKHandling', 'GKKicking', 'GKPositioning', 'GKReflexes', 'ID']
 #     print("Rows to be inserted: "+str(len(data)))
     detailed_data = pd.DataFrame(index=range(0, len(data)), columns=detailed_columns)
