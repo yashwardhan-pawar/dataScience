@@ -12,10 +12,23 @@ class dbConnect(object):
     '''
     
     def dbCusror(self):
+        """
+
+        Returns:
+
+        """
         self.cursor = self.connect.cursor()
         return self.cursor
 
     def executeQuery(self, query):
+        """
+
+        Args:
+            query:
+
+        Returns:
+
+        """
         if self.isOpen():
             self.cursor.execute(query)
             self.connect.commit()
@@ -24,11 +37,19 @@ class dbConnect(object):
             return "Connection Closed"
 
     def dbDisconnect(self):
+        """
+
+        """
         self.connect.close()
         if self.connect.is_connected():
             self.connect.disconnect()
 
     def isOpen(self):
+"""
+
+Returns:
+
+"""
 #         print("Connection is Open" if self.connect.is_connected() else "Connection is Closed")
         return self.connect.is_connected()
 

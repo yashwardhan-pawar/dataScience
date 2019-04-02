@@ -1,12 +1,16 @@
-from typing import List, Any
-
-from httpRequestor import httpResponse
+from ../httpRequestor import httpResponse
 from utilityPackage import FileUtility as fu
 import re
 import time
 import sys
 from bs4 import BeautifulSoup
 from datetime import datetime
+from utilityPackage import ArrayUtility as au
+
+
+au.call_func()
+sys.exit(0)
+
 
 URL = "http://maps.googleapis.com/maps/api/geocode/json"
 
@@ -25,7 +29,7 @@ PARAMS = None
 URL = "https://news.search.yahoo.com/search;_ylt=AwrC2Q6TW5RcKEIAGwjQtDMD;_ylc=X1MDNTM3MjAyNzIEX3IDMgRmcgN1aDNfbmV3c192ZXJ0X2dzBGdwcmlkAwRuX3JzbHQDMARuX3N1Z2cDMARvcmlnaW4DbmV3cy5zZWFyY2gueWFob28uY29tBHBvcwMwBHBxc3RyAwRwcXN0cmwDBHFzdHJsAzQEcXVlcnkDZ29sZAR0X3N0bXADMTU1MzIyNjc0Ng--?p=gold&fr2=sb-top-news.search&fr=uh3_news_vert_gs"
 tagsName = []
 tags = []
-htmlText: List[str] = []
+#htmlText: List[str] = []
 
 HTTPConnectionResponse = httpResponse.httpResponseClass(URL, PARAMS)
 bfsHtml = BeautifulSoup(HTTPConnectionResponse.getResponse(), 'html.parser')
