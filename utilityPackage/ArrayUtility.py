@@ -90,4 +90,8 @@ def call_func():
     test_array = [3,4,5,2,9]
     test_array = [9,9,9]
     print(listTypeValidator([['a'], [1,2]], list))
-    add_number([9,9], 10980)
+    add_number([9,9], 1098860)
+
+
+if __name__ == '__main__':
+    call_func()
