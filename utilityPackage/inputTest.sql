@@ -1,3 +1,4 @@
+begin
   begin
     l := json_list();
     assertTrue(l.count = 0);
@@ -58,7 +59,15 @@
     l := json_list(l.get(2));
     assertTrue(l.count = 0);
     end;
+    begin
+        l := json_list(l.get(2));
+        begin
+        l := json_list(l.get(2));
+    end;
+    end;
+
     pass(str);
   exception
     when others then fail(str);
   end;
+end;
