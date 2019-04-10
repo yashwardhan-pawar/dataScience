@@ -1,5 +1,6 @@
 import pprint
 from googleapiclient.discovery import build
+from json.decoder import JSONObject
 
 
 def main():
@@ -24,7 +25,11 @@ def main():
         ).execute()
     
     print(resp)
-    pprint.pprint(resp)
+    
+    JObj = JSONObject(resp)
+    print(JObj)
+    
+#     pprint.pprint(resp)
     
 
 if __name__ == '__main__':

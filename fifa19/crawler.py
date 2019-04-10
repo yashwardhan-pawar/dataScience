@@ -6,7 +6,13 @@ from utilityPackage import IntegerUtility, StringBuilder
 from fifa19 import DBConnection
 import sys
 
-iu = IntegerUtility.IntUtility()
+
+print(dir(IntegerUtility))
+help(BeautifulSoup)
+sys.exit(1)
+
+
+iu: object = IntegerUtility.IntUtility()
 
 print(iu.isInt("1A"))
 print(iu.isFloat("1A"))
@@ -15,6 +21,12 @@ sys.exit(0)
 
 
 def insert(detailed_columns, detailed_data):
+    """
+
+    Args:
+        detailed_columns:
+        detailed_data:
+    """
     connect = DBConnection.dbConnect();
     for index, row in detailed_data.iterrows():
 #         insertData(mycursor, detailed_columns,detailed_data.loc[detailed_data["ID"] == index], "football_player_details")
@@ -24,6 +36,14 @@ def insert(detailed_columns, detailed_data):
 
 
 def safe_str(obj):
+    """
+
+    Args:
+        obj:
+
+    Returns:
+
+    """
     try:
         val = str(obj)
         if val != "nan":
@@ -38,6 +58,14 @@ def safe_str(obj):
         return "NULL"
 
 def createDbTable(cursor, columnNames, datarow, tableName):
+    """
+
+    Args:
+        cursor:
+        columnNames:
+        datarow:
+        tableName:
+    """
     sqlCols = StringBuilder.AppendString("CREATE TABLE DATA_SCIENCE." + tableName + " (")
     for cols in columnNames:
         val = datarow.get(cols).values[0]
@@ -49,6 +77,14 @@ def createDbTable(cursor, columnNames, datarow, tableName):
 
 
 def insertData(connect, columnNames, dataToInsert, tableName):
+    """
+
+    Args:
+        connect:
+        columnNames:
+        dataToInsert:
+        tableName:
+    """
 #     deleteSql = "delete from DATA_SCIENCE.football_player_data where PID = "+dataToInsert.get("ID").values[0]
 #     connect.executeQuery(deleteSql);
 
@@ -71,6 +107,15 @@ def insertData(connect, columnNames, dataToInsert, tableName):
 
 
 def playerData(insertFlag, createFlag):
+    """
+
+    Args:
+        insertFlag:
+        createFlag:
+
+    Returns:
+
+    """
     # Get basic players informaticon for all players
     if insertFlag or createFlag :
             connect = DBConnection.dbConnect();
@@ -119,6 +164,15 @@ def playerData(insertFlag, createFlag):
 
 # Get detailed player information from player page
 def playerDetails(insertFlag, createFlag):
+    """
+
+    Args:
+        insertFlag:
+        createFlag:
+
+    Returns:
+
+    """
     connect = DBConnection.dbConnect();
     mycursor = connect.dbCusror()
     mycursor.execute("SELECT D.* FROM DATA_SCIENCE.football_player_data D WHERE D.PID NOT IN ( SELECT PID FROM DATA_SCIENCE.football_player_details) LIMIT 250")
