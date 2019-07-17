@@ -1,10 +1,11 @@
-from ../httpRequestor import httpResponse
+# from ../httpRequestor import httpResponse
 from utilityPackage import FileUtility as fu
 import re
 import time
 import sys
-from bs4 import BeautifulSoup
+import time
 from datetime import datetime
+from typing import List
 from utilityPackage import ArrayUtility as au
 
 
@@ -12,9 +13,12 @@ au.call_func()
 sys.exit(0)
 
 
+from bs4 import BeautifulSoup
+
+from httpRequestor import httpResponse
+from utilityPackage import FileUtility as fu
+
 URL = "http://maps.googleapis.com/maps/api/geocode/json"
-
-
 
 URL = "maps.googleapis.com/maps/api/js?key=AIzaSyAve5FCxnf78jPRs8yIaaTxsLPpU2S9UbE&callback=initialize"
 
@@ -41,9 +45,8 @@ for tag in bfsHtml.find_all():
 
 tagsName = list(dict.fromkeys(tagsName))
 tags = list(dict.fromkeys(tags))
-#tags.sort()
-#tagsName.sort()
-
+# tags.sort()
+# tagsName.sort()
 
 for name in tagsName:
     if name in ["a", "div", "h3", "ol"]:
@@ -59,11 +62,12 @@ for name in tagsName:
 # print (htmlText.__len__())
 
 for num in range(1, 28):
-    URL = "https://news.search.yahoo.com/search;_ylt=AwrC1DFnW5RcpSAAUmrQtDMD;_ylu=X3oDMTEzajVvczlrBGNvbG8DYmYxBHBvcwMxBHZ0aWQDBHNlYwNwYWdpbmF0aW9u?p=gold&pz=10&fr=uh3_news_vert_gs&fr2=p%3Anews%2Cm%3Asb&bct=0&b="+str((num*10)+1)+"&pz=10&bct=0&xargs=0"
+    URL = "https://news.search.yahoo.com/search;_ylt=AwrC1DFnW5RcpSAAUmrQtDMD;_ylu=X3oDMTEzajVvczlrBGNvbG8DYmYxBHBvcwMxBHZ0aWQDBHNlYwNwYWdpbmF0aW9u?p=gold&pz=10&fr=uh3_news_vert_gs&fr2=p%3Anews%2Cm%3Asb&bct=0&b=" + str(
+        (num * 10) + 1) + "&pz=10&bct=0&xargs=0"
     HTTPConnectionResponse = httpResponse.httpResponseClass(URL, PARAMS)
     bfsHtml = BeautifulSoup(HTTPConnectionResponse.getResponse(), 'html.parser')
     fu.appendFile("HTMLPage_gold.html", bfsHtml.prettify())
-    print(str(datetime.now())+" Going to sleep for 30 sec. Iteration: "+str(num))
+    print(str(datetime.now()) + " Going to sleep for 30 sec. Iteration: " + str(num))
     time.sleep(3)
     for name in ["a", "div", "h3", "ol"]:
         for text in bfsHtml.find_all(name):
@@ -78,7 +82,6 @@ print (htmlText.__len__())
 fu.writeFile("HTMLParsing_gold.txt", '\n'.join(htmlText))
 
 sys.exit(0)
-
 
 print(tags)
 tagsName = tags.name
@@ -97,32 +100,27 @@ for tag in bfsHtml.find_all():
 
 sys.exit(-1)
 
-
 for link in bfsHtml.findAll('a'):
-    #print(link.get('href'))
-    #print(link.get_text())
+    # print(link.get('href'))
+    # print(link.get_text())
     print("Exit A")
 
 for link in bfsHtml.findAll('p'):
-    #print(link.get('href'))
+    # print(link.get('href'))
     print(link.get_text())
 
 for link in bfsHtml.findAll('p'):
-    #print(link.get('href'))
+    # print(link.get('href'))
     print(link.get_text())
 
 sys.exit(-1)
-
-
-
-
 
 tag = list(bfsHtml.find_all("a"))
 print(tag.__len__())
 print(tag[5].get_text())
 htmlPage = list(bfsHtml.children)[1]
 htmlPage = list(htmlPage.children)[1]
-#htmlPage = list(htmlPage.children)[4]
+# htmlPage = list(htmlPage.children)[4]
 htmlPage = list(htmlPage.children)[4]
 htmlPage = list(htmlPage.children)[3]
 htmlPage = list(htmlPage.children)[1]
@@ -134,7 +132,7 @@ print(tag.__len__())
 print(tag[1].get_text())
 
 for link in htmlPage.findAll('a'):
-    #print(link.get('href'))
+    # print(link.get('href'))
     print(link.get_text())
 
 sys.exit(-1)
@@ -142,10 +140,9 @@ sys.exit(-1)
 print(list(htmlPage.children).__len__())
 print(list(htmlPage.children)[1])
 print(BeautifulSoup(list(htmlPage.children)[1], 'html.parser').HTML_FORMATTERS)
-#print(bfsHtml.prettify())
+# print(bfsHtml.prettify())
 bfs = bfsHtml.handle_data(data2)
-#print(bfs)
-
+# print(bfs)
 
 # extracting latitude, longitude and formatted address
 # of the first matching location
