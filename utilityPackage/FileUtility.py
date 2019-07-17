@@ -3,8 +3,8 @@ Created on Feb 15, 2019
 
 @author: code
 '''
-from typing import TextIO
 import os
+
 
 def readFile(fileName):
     try:
@@ -26,7 +26,7 @@ def writeFile(fileName, data, isNewFile=None):
                 f = open(fileName, "w")
                 f.write(data)
             else:
-                return "Invalid isNewFile Parameter Passed ["+isNewFile+"]. Valid values: True or False"
+                return "Invalid isNewFile Parameter Passed [" + isNewFile + "]. Valid values: True or False"
         else:
             f = open(fileName, "w")
             f.write(data)
@@ -36,6 +36,7 @@ def writeFile(fileName, data, isNewFile=None):
         return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
     except Exception as e:
         return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+
 
 def appendFile(fileName, data):
     try:
@@ -47,6 +48,7 @@ def appendFile(fileName, data):
         return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
     except Exception as e:
         return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+
 
 def deleteFile(fileName):
     try:

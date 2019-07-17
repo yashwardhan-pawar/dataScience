@@ -10,7 +10,7 @@ class dbConnect(object):
     '''
     classdocs
     '''
-    
+
     def dbCusror(self):
         """
 
@@ -45,16 +45,10 @@ class dbConnect(object):
             self.connect.disconnect()
 
     def isOpen(self):
-"""
-
-Returns:
-
-"""
-#         print("Connection is Open" if self.connect.is_connected() else "Connection is Closed")
+        # print("Connection is Open" if self.connect.is_connected() else "Connection is Closed")
         return self.connect.is_connected()
 
-
-    def __init__(self, host=None, username=None,password=None):
+    def __init__(self, host=None, username=None, password=None):
         '''
         Constructor
         '''
@@ -62,21 +56,21 @@ Returns:
             self.host = host
         else:
             self.host = "localhost"
-        
+
         if username is not None:
             self.username = username
         else:
             self.username = "user"
-        
+
         if password is not None:
             self.password = password
         else:
             self.password = "1234"
-        
+
         self.connect = mysql.connector.connect(
-            host=self.host, 
+            host=self.host,
             user=self.username,
             password=self.password
-            )
-        
+        )
+
         self.cursor = self.connect.cursor()

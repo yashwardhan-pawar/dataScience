@@ -1,4 +1,5 @@
 import pprint
+
 from googleapiclient.discovery import build
 from json.decoder import JSONObject
 
@@ -9,9 +10,6 @@ def main():
     # to get an API key for your own application.
     service = build("customsearch", "v1",
               developerKey="AIzaSyAve5FCxnf78jPRs8yIaaTxsLPpU2S9UbE")
-    
-    
-    
  
 #     res = service.cse().list(
 #         q='lectures',
