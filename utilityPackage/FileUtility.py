@@ -11,9 +11,9 @@ def readFile(fileName):
         f = open(fileName, "r")
         return f.read()
     except FileNotFoundError as e:
-        return "Error, File not found: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error, File not found: " + fileName + ". Execption: " + str(e)
     except Exception as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error reading file: " + fileName + ". Execption: " + str(e)
 
 
 def writeFile(fileName, data, isNewFile=None):
@@ -31,11 +31,11 @@ def writeFile(fileName, data, isNewFile=None):
             f = open(fileName, "w")
             f.write(data)
     except FileExistsError as e:
-        return "Error, file already exists: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error, file already exists: " + fileName + ". Execption: " + str(e)
     except FileNotFoundError as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error reading file: " + fileName + ". Execption: " + str(e)
     except Exception as e:
-        return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error writing file: " + fileName + ". Execption: " + str(e)
 
 
 def appendFile(fileName, data):
@@ -43,11 +43,11 @@ def appendFile(fileName, data):
         f = open(fileName, "a")
         f.write(data)
     except FileExistsError as e:
-        return "Error, file already exists: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error, file already exists: " + fileName + ". Execption: " + str(e)
     except FileNotFoundError as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error reading file: " + fileName + ". Execption: " + str(e)
     except Exception as e:
-        return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error writing file: " + fileName + ". Execption: " + str(e)
 
 
 def deleteFile(fileName):
@@ -57,8 +57,8 @@ def deleteFile(fileName):
         else:
             return "File does not exist. " + fileName
     except FileExistsError as e:
-        return "Error, file already exists: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error, file already exists: " + fileName + ". Execption: " + str(e)
     except FileNotFoundError as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error reading file: " + fileName + ". Execption: " + str(e)
     except Exception as e:
-        return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+        return "Error writing file: " + fileName + ". Execption: " + str(e)
