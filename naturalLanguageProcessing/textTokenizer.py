@@ -44,19 +44,32 @@ def getWordList(sentences):
         wordList.append(word_tokenize(eachSentence))
     return wordList
 
+
 # Remove stopwords  like .,; from words list
 #     Create List of Stopwords
 def removeStopWords(wordList):
-    customStopWordsList = set(stopwords.words('english') + list(punctuation))
-    # Filter Stop Words
-    filterWords = []
-    for words in wordList:
-        filterWords.append([word for word in words if word not in customStopWordsList])
+    try:
+        customStopWordsList = set(stopwords.words('english') + list(punctuation))
+        # Filter Stop Words
+        filterWords = []
+        for words in wordList:
+            filterWords.append([word for word in words if word not in customStopWordsList])
+    except:
+        pass
+    return filterWords
+
 
 # In each sentence, find bi-grams
 # bigram_measures = nltk.collocations.BigramAssocMeasures()
+
 finder = []
 #   Create Finder List & Print
+
+dataFr = readcsvtodf(numberOfRows=9)
+text = textBuilder(dataFr)
+sentences = getSentences(text)
+wordList = getWordList(sentences)
+filterWords = removeStopWords(wordList)
 for each in filterWords:
     finder.append(nltk.collocations.BigramCollocationFinder.from_words(each))
 
