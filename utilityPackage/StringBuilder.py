@@ -3,42 +3,51 @@ Created on Feb 15, 2019
 
 @author: code
 '''
-from setuptools.unicode_utils import try_encode
-class AppendString(object):
+
+'''
+Use JOIN
+'''
+
+
+class StringBuilder(object):
     '''
     classdocs
     '''
-    def append(self, stringToAppend):
-        self.returnString += stringToAppend
 
-    def appendLowerCase(self, stringToAppend):
-        self.returnString += stringToAppend.lower()
+    def _append(self, stringToAppend: str):
+        return [self.returnString, stringToAppend]
 
-    def appendUpperCase(self, stringToAppend):
-        self.returnString += stringToAppend.upper()
+    def append(self, stringToAppend: str):
+        self.returnString = ''.join(self._append(stringToAppend))
 
-    def appendCapatalize(self, stringToAppend):
-        self.returnString += stringToAppend.capitalize()
-        
-    def removeTrailingChar(self, index=None):
+    def appendLowerCase(self, stringToAppend: str):
+        self.returnString = ''.join(self._append(stringToAppend.lower()))
+
+    def appendUpperCase(self, stringToAppend: str):
+        self.returnString = ''.join(self._append(stringToAppend.upper()))
+
+    def appendCapatalize(self, stringToAppend: str):
+        self.returnString = ''.join(self._append(stringToAppend.capitalize()))
+
+    def removeTrailingChar(self, index: int = None):
         if index is None or index == 0:
-            self.returnString = self.returnString[:-1] 
+            self.returnString = self.returnString[:-1]
         else:
             self.returnString = self.returnString[:-index]
-        
-    def removeStartingChar(self, index=None):
+
+    def removeStartingChar(self, index: int = None):
         if index is None or index == 0:
             self.returnString = self.returnString[1:]
         else:
             self.returnString = self.returnString[index:]
-            
+
     def toString(self):
-        return self.returnString
-    
+        return str(self.returnString)
+
     def length(self):
-        return self.returnString.__len__()
-    
-    def __init__(self, initialString=None):
+        return len(self.returnString)
+
+    def __init__(self, initialString: str = None):
         '''
         Constructor
         '''

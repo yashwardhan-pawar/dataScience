@@ -3,60 +3,84 @@ Created on Feb 15, 2019
 
 @author: code
 '''
-from typing import TextIO
 import os
 
-def readFile(fileName):
-    try:
-        f = open(fileName, "r")
-        return f.read()
-    except FileNotFoundError as e:
-        return "Error, File not found: " + fileName + "Execption: " + e.errno + str(e)
-    except Exception as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
 
+class Files(object):
 
-def writeFile(fileName, data, isNewFile=None):
-    try:
-        if isNewFile != None:
-            if isNewFile == True:
-                f = open(fileName, "x")
-                f.write(data)
-            elif isNewFile == False:
-                f = open(fileName, "w")
-                f.write(data)
+    def readFile(self, linesToRead: int = None):
+        try:
+            with open(self.fileName, "r", encoding="utf8") as file:
+                if linesToRead is not None:
+                    return ''.join(list(file)[:linesToRead])
+                else:
+                    return file.read()
+        except FileNotFoundError as e:
+            return "Error, File not found: " + self.fileName + ". Exception: " + str(e)
+        except UnicodeDecodeError as e:
+            try:
+                with open(self.fileName, "r", encoding="ISO-8859-1") as file:
+                    if linesToRead is not None:
+                        return ''.join(list(file)[:linesToRead])
+                    else:
+                        return file.read()
+            except Exception as e:
+                raise Exception
+        except Exception as e:
+            return "Error reading file: " + self.fileName + ". Exception: " + str(type(e)) + ": " + str(e)
+
+    def writeFile(self, data: str, isNewFile: bool = None):
+        try:
+            if isNewFile is not None:
+                if isNewFile is True:
+                    with open(self.fileName, "x", encoding="utf8") as file:
+                        file.write(data)
+                elif isNewFile is False:
+                    with open(self.fileName, "w", encoding="utf8") as file:
+                        file.write(data)
+                else:
+                    return "Invalid isNewFile Parameter Passed [" + isNewFile + "]. Valid values: True or False"
             else:
-                return "Invalid isNewFile Parameter Passed ["+isNewFile+"]. Valid values: True or False"
-        else:
-            f = open(fileName, "w")
-            f.write(data)
-    except FileExistsError as e:
-        return "Error, file already exists: " + fileName + "Execption: " + e.errno + str(e)
-    except FileNotFoundError as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
-    except Exception as e:
-        return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+                with open(self.fileName, "w", encoding="utf8") as file:
+                    file.write(data)
+        except FileExistsError as e:
+            return "Error, file already exists: " + self.fileName + ". Exception: " + str(e)
+        except FileNotFoundError as e:
+            return "Error reading file: " + self.fileName + ". Exception: " + str(e)
+        except Exception as e:
+            return "Error writing file: " + self.fileName + ". Exception: " + str(type(e)) + ": " + str(e)
 
-def appendFile(fileName, data):
-    try:
-        f = open(fileName, "a")
-        f.write(data)
-    except FileExistsError as e:
-        return "Error, file already exists: " + fileName + "Execption: " + e.errno + str(e)
-    except FileNotFoundError as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
-    except Exception as e:
-        return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+    def appendFile(self, data: str):
+        try:
+            with open(self.fileName, "a", encoding="utf8") as file:
+                file.write(data)
+        except FileExistsError as e:
+            return "Error, file already exists: " + self.fileName + ". Exception: " + str(e)
+        except FileNotFoundError as e:
+            return "Error reading file: " + self.fileName + ". Exception: " + str(e)
+        except Exception as e:
+            return "Error writing file: " + self.fileName + ". Exception: " + str(type(e)) + ": " + str(e)
 
-def deleteFile(fileName):
-    try:
-        if os.path.exists(fileName):
-            os.remove(fileName)
+    def deleteFile(self):
+        try:
+            if os.path.exists(self.fileName):
+                os.remove(self.fileName)
+            else:
+                return "File does not exist. " + self.fileName
+        except FileExistsError as e:
+            return "Error, file already exists: " + self.fileName + ". Exception: " + str(e)
+        except FileNotFoundError as e:
+            return "Error reading file: " + self.fileName + ". Exception: " + str(e)
+        except Exception as e:
+            return "Error writing file: " + self.fileName + ". Exception: " + str(type(e)) + ": " + str(e)
+        finally:
+            os.close()
+
+    def __init__(self, filePath: str):
+        '''
+        Constructor
+        '''
+        if filePath is not None:
+            self.fileName = filePath
         else:
-            return "File does not exist. " + fileName
-    except FileExistsError as e:
-        return "Error, file already exists: " + fileName + "Execption: " + e.errno + str(e)
-    except FileNotFoundError as e:
-        return "Error reading file: " + fileName + "Execption: " + e.errno + str(e)
-    except Exception as e:
-        return "Error writing file: " + fileName + "Execption: " + e.errno + str(e)
+            raise EOFError("Need File Path")

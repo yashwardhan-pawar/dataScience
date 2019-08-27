@@ -4,8 +4,9 @@ Created on Feb 21, 2019
 @author: code
 '''
 
-import requests
 import json
+
+import requests
 
 
 class httpResponseClass(object):
