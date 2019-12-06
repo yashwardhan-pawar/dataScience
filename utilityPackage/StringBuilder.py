@@ -9,7 +9,7 @@ Use JOIN
 '''
 
 
-class StringBuilder(object):
+class StringBuilder:
     '''
     classdocs
     '''
